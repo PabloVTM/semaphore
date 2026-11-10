@@ -1,117 +1,100 @@
-# Semaphore UI
+# Semaphore UI (fork)
 
-Modern UI for Ansible, Terraform/OpenTofu/Terragrunt, PowerShell and other DevOps tools.
-<!--
-[![](https://img.shields.io/github/license/semaphoreui/semaphore)](LICENSE)
--->
+A modern web UI to run Ansible playbooks, Terraform / OpenTofu / Terragrunt code, Bash and PowerShell scripts: projects, task templates, schedules, inventories, secrets, access control and notifications on failed tasks.
 
-[![Dev](https://github.com/semaphoreui/semaphore/actions/workflows/dev.yml/badge.svg)](https://github.com/semaphoreui/semaphore/actions/workflows/dev.yml)
-[![](https://img.shields.io/docker/pulls/semaphoreui/semaphore.svg)](https://hub.docker.com/r/semaphoreui/semaphore)
+This is a fork of [semaphoreui/semaphore](https://github.com/semaphoreui/semaphore) by [Denis Gukov](https://github.com/fiftin), maintained at [PabloVTM/semaphore](https://github.com/PabloVTM/semaphore) with the PabloSystems theme shared with the other PabloVTM tools: Deep Sage Green `#4B5A50`, Warm Ivory `#F1EEE3` and Vibrant Vermillion Red `#F20B0B` for details, system monospace fonts and a `pablo@systems:~/semaphore` prompt on the sign-in page and in the navigation drawer, in light and dark modes. It is the open-source (MIT) edition: features of Semaphore PRO and Enterprise stay unavailable.
 
-<!-- 
-[![roadmap](https://img.shields.io/badge/roadmap-gray?style=for-the-badge&logo=github)](https://github.com/orgs/semaphoreui/projects/11)
-[![telegram](https://img.shields.io/badge/discord_community-510b80?style=for-the-badge&logo=discord)](https://discord.gg/5R6k7hNGcH) 
-[![youtube](https://img.shields.io/badge/youtube_channel-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/@semaphoreui) 
-[![docker](https://img.shields.io/badge/container_configurator-white?style=for-the-badge&logo=docker)](https://semaphoreui.com/install/docker/)
--->
+## Image
 
+The server image is published to GitHub Container Registry for `linux/amd64` and `linux/arm64`:
 
-![responsive-ui-phone1](https://user-images.githubusercontent.com/914224/134777345-8789d9e4-ff0d-439c-b80e-ddc56b74fcee.png)
+| Tag | Content |
+| --- | --- |
+| `ghcr.io/pablovtm/semaphore:latest` | Latest build of `develop`. |
+| `ghcr.io/pablovtm/semaphore:YYYY-MM-DD` | Dated version, e.g. `2026-11-10`. Each build upgrades the Alpine packages, so a new dated version also brings the latest Alpine security fixes. |
 
-If your project has grown and deploying from the terminal is no longer feasible, then Semaphore UI is the tool you need.
+It bundles Ansible 13.8, OpenTofu 1.13, Terraform 1.17 and Terragrunt 0.78 (Terragrunt 1.x no longer forwards the `workspace` commands Semaphore runs).
 
-## Demo
+## Quick start
 
-[Try Semaphore UI online](https://portal.semaphoreui.com/demo)
+```yaml
+services:
+  semaphore:
+    image: ghcr.io/pablovtm/semaphore:latest
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    environment:
+      SEMAPHORE_DB_DIALECT: sqlite
+      SEMAPHORE_ADMIN: admin
+      SEMAPHORE_ADMIN_PASSWORD: changeme
+      SEMAPHORE_ADMIN_NAME: Admin
+      SEMAPHORE_ADMIN_EMAIL: admin@localhost
+      # recommended: encrypts the stored keys and secrets. Generate it once with
+      # `head -c32 /dev/urandom | base64` and keep it with your backups.
+      # SEMAPHORE_ACCESS_KEY_ENCRYPTION: <your key>
+    volumes:
+      - semaphore-data:/var/lib/semaphore
+      - semaphore-config:/etc/semaphore
 
-<!--
-## Live Demo
-
-Try the latest version of Semaphore at [https://portal.semaphoreui.com](https://portal.semaphoreui.com).
--->
-
-## What is Semaphore UI?
-
-Semaphore UI is a modern web interface for managing popular DevOps tools.
-
-Semaphore UI allows you to:
-* Easily run Ansible playbooks, Terraform and OpenTofu code, as well as Bash and PowerShell scripts.
-* Receive notifications about failed tasks.
-* Control access to your deployment system.
-
-## Key Concepts
-
-1. **Projects** is a collection of related resources, configurations, and tasks.
-2. **Task Templates** are reusable definitions of tasks that can be executed on demand or scheduled.
-3. **Task** is a specific instance of a job or operation executed by Semaphore.
-4. **Schedules** allow you to automate task execution at specified times or intervals.
-5. **Inventory** is a collection of target hosts (servers, virtual machines, containers, etc.) on which tasks will be executed.
-6. **Variable Group** refers to a configuration context that holds sensitive information such as environment variables and secrets used by tasks during execution.
-
-## Getting Started
-
-You can install Semaphore using the following methods:
-* [Docker](https://semaphoreui.com/install/docker)
-* Deploy a VM from a marketplace:
-  * [AWS](https://aws.amazon.com/marketplace/pp/prodview-xavlsdkqybxtq)
-  * [Cloudzy](https://cloudzy.com/marketplace/semaphore-ui)
-  * [DigitalOcean](https://marketplace.digitalocean.com/apps/semaphore?refcode=b55d7c0077b8&action=deploy)
-  * [Vultr](https://www.vultr.com/marketplace/apps/semaphore)
-  * [Yandex Cloud](https://yandex.cloud/ru/marketplace/products/fastlix/semaphore)
-  * [RepoCloud](https://repocloud.io/details/Semaphore/)
-  * [Pethost](https://pethost.dev/templates/semaphore/)
-* [Snap](http://snapcraft.io/semaphore)
-* [Binary file](https://semaphoreui.com/install/binary)
-* [Debian or RPM package](https://semaphoreui.com/install/binary)
-
-### Docker
-
-The most popular way to install Semaphore is via Docker.
-
-```
-docker run -p 3000:3000 --name semaphore \
-	-e SEMAPHORE_DB_DIALECT=sqlite \
-	-e SEMAPHORE_ADMIN=admin \
-	-e SEMAPHORE_ADMIN_PASSWORD=changeme \
-	-e SEMAPHORE_ADMIN_NAME=Admin \
-	-e SEMAPHORE_ADMIN_EMAIL=admin@localhost \
-	-d semaphoreui/semaphore:latest
+volumes:
+  semaphore-data:
+  semaphore-config:
 ```
 
-We recommend using the [Container Configurator](https://semaphoreui.com/install/docker/) to get the ideal Docker configuration for Semaphore.
+or
 
-<!--
-### SaaS
+```bash
+docker run -d --name semaphore -p 3000:3000 \
+  -e SEMAPHORE_DB_DIALECT=sqlite \
+  -e SEMAPHORE_ADMIN=admin \
+  -e SEMAPHORE_ADMIN_PASSWORD=changeme \
+  -e SEMAPHORE_ADMIN_NAME=Admin \
+  -e SEMAPHORE_ADMIN_EMAIL=admin@localhost \
+  ghcr.io/pablovtm/semaphore:latest
+```
 
-We offer a SaaS solution for using Semaphore UI without installation. Check it out at [Semaphore Cloud](https://portal.semaphoreui.com).
--->
+Then open http://localhost:3000 and sign in as `admin`. The container reports its health on `/api/ping`. Change the admin password after the first sign-in, and put a reverse proxy with TLS in front of Semaphore before exposing it: it runs code on your infrastructure.
 
-### Other Installation Methods
+MySQL, MariaDB and PostgreSQL are supported too (`SEMAPHORE_DB_DIALECT`, `SEMAPHORE_DB_HOST`, `SEMAPHORE_DB_USER`, `SEMAPHORE_DB_PASS`, `SEMAPHORE_DB`); the compose files in [deployment/compose](deployment/compose) combine the server with each of them.
 
-For more installation options, visit our [Installation page](https://semaphoreui.com/install).
+## Configuration
 
-## Documentation
+Semaphore reads its settings from `config.json` (`/etc/semaphore` in the container) or from `SEMAPHORE_*` environment variables. All options are described in [config.schema.yaml](config.schema.yaml); the [upstream documentation](https://docs.semaphoreui.com) covers LDAP / OIDC sign-in, runners, notifications and the API.
 
-* [User Guide](https://docs.semaphoreui.com)
-* [API Reference](https://semaphoreui.com/api-docs)
-* [Postman Collection](https://www.postman.com/semaphoreui)
+## Releasing
 
-## Awesome Semaphore
+Push a date tag to publish a dated version (and `latest`):
 
-A curated list of awesome things related to Semaphore UI.
+```bash
+git tag 2026-11-10
+git push origin 2026-11-10
+```
 
-* [Ebdruplab — Ansible Collections](https://github.com/Ebdruplab/ansible-collection_ebdruplab) &mdash; Ansible modules and a role for managing Semaphore.
-* [SemaphoreUI MCP Server](https://github.com/cloin/semaphore-mcp) &mdash; A Model Context Protocol (MCP) server that provides AI assistants with powerful automation capabilities for SemaphoreUI.
-* [Terraform SemaphoreUI Provider](https://github.com/CruGlobal/terraform-provider-semaphoreui) &mdash; Manage Semaphore UI resources using Terraform.
-* [PSSemaphore](https://github.com/robinmalik/PSSemaphore) &mdash; A PowerShell module designed to work against the Ansible Semaphore REST API.
+The [build-test-publish](.github/workflows/build-test-publish.yml) workflow lints and tests the web app and the Go code, builds the image from the latest Alpine base with no cache, smoke tests it (SQLite, admin sign-in, the theme in the bundle, the bundled tools, no pending Alpine updates), then pushes the multi-arch image. Pushes to `develop` publish `latest`.
 
-[//]: # (* [Ansible UI Semaphore]&#40;https://github.com/morbidick/ansible-role-semaphore&#41; &mdash; Ansible role to install and configure the Ansible UI Semaphore.)
+## Building
 
-## Contribution
+```bash
+docker build -f deployment/docker/server/Dockerfile -t semaphore .
+```
 
-* [Contribution Guide](https://github.com/semaphoreui/semaphore/blob/develop/CONTRIBUTING.md)
-* [Dev Container](https://codespaces.new/semaphoreui/semaphore) (default user `admin` / `changeme`)
+## Development
+
+Requires Go 1.26, Node.js 24 and [Task](https://taskfile.dev).
+
+```bash
+task deps     # Go modules and web dependencies
+task build    # web bundle (embedded in the binary) and bin/semaphore
+task test     # web unit tests and Go tests
+```
+
+The web app alone runs with `npm run serve` in `web/` (it proxies the API of a running server). A [dev container](.devcontainer) is available too (default user `admin` / `changeme`).
+
+## Credits
+
+Semaphore UI is created by [Denis Gukov](https://github.com/fiftin) and the [contributors](https://github.com/semaphoreui/semaphore/graphs/contributors) of [semaphoreui/semaphore](https://github.com/semaphoreui/semaphore), originally Ansible Semaphore by Castaway Labs. If you rely on it, consider [Semaphore PRO](https://semaphoreui.com/pro) to support the project. This fork is maintained by [PabloVTM](https://github.com/PabloVTM).
 
 ## License
 
-MIT © [Denis Gukov](https://github.com/fiftin)
+[MIT](LICENSE) © Denis Gukov, Castaway Labs LLC.
