@@ -42,30 +42,45 @@ const semaphoreAliases = Object.fromEntries(
   Object.keys(SEMAPHORE_ICONS).map((name) => [name, `semaphore:${name}`]),
 );
 
-// Default palette of Vuetify 2.
+// PabloSystems theme: Deep Sage Green #4B5A50, Warm Ivory #F1EEE3 and Vibrant
+// Vermillion Red #F20B0B for details. The status colors (error, info, success,
+// warning) keep the Vuetify 2 palette, so states read the same as upstream.
+// `detail-ink` is the vermillion tuned for text on the theme surfaces (4.5:1).
 const colors = {
   light: {
-    primary: '#1976D2',
-    secondary: '#424242',
-    accent: '#82B1FF',
+    background: '#F1EEE3',
+    'on-background': '#2B332E',
+    surface: '#F8F6EF',
+    'on-surface': '#2B332E',
+    primary: '#4B5A50',
+    secondary: '#3E4B43',
+    accent: '#F20B0B',
     error: '#FF5252',
     info: '#2196F3',
     success: '#4CAF50',
     warning: '#FB8C00',
+    detail: '#F20B0B',
+    'detail-ink': '#C40808',
     // `amber darken-3` of the palette with white text: Vuetify 2 drew coloured buttons and alerts
     // dark (white text), Vuetify 4 picks black for this colour.
     'amber-darken-3': '#FF8F00',
     'on-amber-darken-3': '#FFFFFF',
   },
   dark: {
-    background: '#1E1E1E',
-    primary: '#2196F3',
-    secondary: '#424242',
-    accent: '#FF4081',
+    background: '#1F2622',
+    'on-background': '#F1EEE3',
+    surface: '#252C28',
+    'on-surface': '#F1EEE3',
+    primary: '#A9BAAE',
+    'on-primary': '#1F2622',
+    secondary: '#4B5A50',
+    accent: '#FF7A70',
     error: '#FF5252',
     info: '#2196F3',
     success: '#4CAF50',
     warning: '#FB8C00',
+    detail: '#F20B0B',
+    'detail-ink': '#FF7A70',
     'amber-darken-3': '#FF8F00',
     'on-amber-darken-3': '#FFFFFF',
   },

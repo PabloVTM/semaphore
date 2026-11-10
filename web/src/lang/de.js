@@ -406,4 +406,5 @@ export default {
   noProjectsText: 'Sie sind in keinem Projekt Mitglied. Bitten Sie Ihren Semaphore-Administrator, Sie zu einem hinzuzufügen.',
   signedInAs: 'Angemeldet als {username} ({email})',
   signedInAsNoEmail: 'Angemeldet als {username}',
+  forkMaintainedBy: 'Gepflegt von {name}',
 };

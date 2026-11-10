@@ -98,6 +98,10 @@
               data-testid="auth-logo"
             />
 
+            <div class="text-center auth__prompt">
+              <TerminalPrompt />
+            </div>
+
             <h2
               v-if="screen === 'verification'"
               class="text-center pt-4 pb-6"
@@ -353,6 +357,12 @@
                 >{{ $t('dontHaveAccountOrCantSignIn') }}</a>
               </div>
             </div>
+
+            <div class="text-center mt-6 text-body-small auth__credit" data-testid="auth-credit">
+              <a href="https://github.com/PabloVTM/semaphore" target="_blank" rel="noopener">
+                {{ $t('forkMaintainedBy', { name: 'PabloVTM' }) }}
+              </a>
+            </div>
           </v-form>
         </v-card-text>
       </v-card>
@@ -360,6 +370,21 @@
   </div>
 </template>
 <style lang="scss">
+.auth__prompt {
+  font-size: .875rem;
+}
+
+.auth__credit a {
+  color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    color: rgb(var(--v-theme-primary));
+    text-decoration: underline;
+  }
+}
+
 .auth__divider {
   margin-top: 15px;
   margin-bottom: 5px;
@@ -433,7 +458,7 @@
 }
 .auth {
   background-image: url('../assets/background.svg');
-  background-color: #005057;
+  background-color: #4b5a50;
   background-size: cover;
 }
 </style>
@@ -441,8 +466,10 @@
 import axios from 'axios';
 import { getErrorMessage } from '@/lib/error';
 import EventBus from '@/event-bus';
+import TerminalPrompt from '@/components/TerminalPrompt.vue';
 
 export default {
+  components: { TerminalPrompt },
   data() {
     return {
       signInFormValid: false,

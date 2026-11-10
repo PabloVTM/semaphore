@@ -363,4 +363,5 @@ export default {
   noProjectsText: 'どのプロジェクトにも参加していません。Semaphore の管理者に追加を依頼してください。',
   signedInAs: '{username} ({email}) としてサインイン中',
   signedInAsNoEmail: '{username} としてサインイン中',
+  forkMaintainedBy: 'メンテナー: {name}',
 };

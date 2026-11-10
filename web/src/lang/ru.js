@@ -372,4 +372,5 @@ export default {
   noProjectsText: 'Вы не состоите ни в одном проекте. Попросите администратора Semaphore добавить вас в проект.',
   signedInAs: 'Вы вошли как {username} ({email})',
   signedInAsNoEmail: 'Вы вошли как {username}',
+  forkMaintainedBy: 'Поддерживается {name}',
 };

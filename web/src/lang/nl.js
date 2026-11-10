@@ -363,4 +363,5 @@ export default {
   noProjectsText: 'U bent geen lid van een project. Vraag uw Semaphore-beheerder om u aan een project toe te voegen.',
   signedInAs: 'Aangemeld als {username} ({email})',
   signedInAsNoEmail: 'Aangemeld als {username}',
+  forkMaintainedBy: 'Onderhouden door {name}',
 };

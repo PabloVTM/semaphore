@@ -363,4 +363,5 @@ export default {
   noProjectsText: 'No eres miembro de ningún proyecto. Pide a tu administrador de Semaphore que te añada a uno.',
   signedInAs: 'Sesión iniciada como {username} ({email})',
   signedInAsNoEmail: 'Sesión iniciada como {username}',
+  forkMaintainedBy: 'Mantenido por {name}',
 };

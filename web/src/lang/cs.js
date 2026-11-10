@@ -470,4 +470,5 @@ export default {
   noProjectsText: 'Nejste členem žádného projektu. Požádejte správce Semaphore, aby vás do nějakého přidal.',
   signedInAs: 'Přihlášen jako {username} ({email})',
   signedInAsNoEmail: 'Přihlášen jako {username}',
+  forkMaintainedBy: 'Spravuje {name}',
 };

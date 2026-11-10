@@ -398,4 +398,5 @@ export default {
   noProjectsText: '您還不是任何專案的成員。請聯絡 Semaphore 管理員將您加入專案。',
   signedInAs: '已登入為 {username} ({email})',
   signedInAsNoEmail: '已登入為 {username}',
+  forkMaintainedBy: '維護者：{name}',
 };

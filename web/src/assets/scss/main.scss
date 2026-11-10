@@ -62,7 +62,12 @@
 // Vuetify styles are imported in main.js ('vuetify/styles') before this file.
 
 // Layout variables of the resource pages (`max-width: calc(var(--breakpoint-xl) - ...)`).
+// `--v-font-body` / `--v-font-heading`: Vuetify's font families, here the system
+// monospace fonts of the PabloSystems theme (nothing to download, works offline).
 :root {
+  --v-font-body: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono',
+    'DejaVu Sans Mono', monospace;
+  --v-font-heading: var(--v-font-body);
   --breakpoint-sm: 600px;
   --breakpoint-md: 960px;
   --breakpoint-lg: 1264px;
@@ -75,7 +80,7 @@
 }
 
 .v-bottom-sheet .v-sheet.v-theme--dark {
-  background: #212121;
+  background: #252c28;
 }
 
 // SVG icons of the IconSet in plugins/vuetify.js fill the box of `v-icon`

@@ -138,7 +138,7 @@
 
     <v-navigation-drawer
       theme="dark"
-      :color="darkMode ? '#003236' : '#005057'"
+      :color="darkMode ? '#252C28' : '#4B5A50'"
       width="260"
       v-model="drawer"
       :mobile-breakpoint="960"
@@ -366,6 +366,13 @@
       </v-list>
 
       <template v-slot:append>
+        <div
+          v-if="!(navMini && $vuetify.display.mdAndUp)"
+          class="NavDrawer__prompt"
+          data-testid="sidebar-prompt"
+        >
+          <TerminalPrompt variant="drawer" />
+        </div>
         <v-list class="pa-0">
           <v-list-item class="NavDrawer__toolsRow">
             <div class="DarkModeSwitchWrap" :class="{ 'DarkModeSwitchWrap--dark': darkMode }">
@@ -943,7 +950,7 @@ html.WorkflowEditor-html body {
 }
 
 .v-theme--dark {
-  --highlighted-card-bg-color: #262626;
+  --highlighted-card-bg-color: #2e3731;
 
   // Dialogs opened above another dialog have no overlay; the default Vuetify
   // shadow is too faint on a dark background, so use a wider, denser one.
@@ -954,7 +961,7 @@ html.WorkflowEditor-html body {
 }
 
 .v-theme--light {
-  --highlighted-card-bg-color: #f8f8f8;
+  --highlighted-card-bg-color: #ede9dc;
 }
 
 .DarkModeSwitchWrap {
@@ -1060,6 +1067,11 @@ html.WorkflowEditor-html body {
 }
 
 // The small chip of Vuetify 2 is 24 px high (Vuetify 4: 26).
+.NavDrawer__prompt {
+  padding: 8px 16px 4px;
+  font-size: .8125rem;
+}
+
 .NavDrawer__adminChip {
   --v-chip-height: 24px;
 }
@@ -1175,10 +1187,10 @@ html.WorkflowEditor-html body {
   // this one): the colour goes on its parts, which draw their borders in the current colour.
   &.v-field--focused .v-field__outline {
     --v-field-border-width: 2px !important;
-    color: #2196f3;
+    color: rgb(var(--v-theme-primary));
 
     > * {
-      color: #2196f3;
+      color: rgb(var(--v-theme-primary));
     }
   }
 
@@ -1242,6 +1254,7 @@ import RestoreProjectResult from '@/components/RestoreProjectResult.vue';
 import YesNoDialog from '@/components/YesNoDialog.vue';
 import TaskLogDialog from '@/components/TaskLogDialog.vue';
 import SystemInfoDialog from '@/components/SystemInfoDialog.vue';
+import TerminalPrompt from '@/components/TerminalPrompt.vue';
 import delay from '@/lib/delay';
 
 const PROJECT_COLORS = ['red', 'blue', 'orange', 'green'];
@@ -1326,6 +1339,7 @@ export default {
     EditDialog,
     ProjectForm,
     SystemInfoDialog,
+    TerminalPrompt,
   },
   data() {
     return {
