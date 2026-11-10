@@ -34,7 +34,7 @@ type globalRoute struct {
 }
 
 // globalRoutes mirrors the "Route → permission" table of
-// AGENTS/work/auth-and-identity/global-roles-and-permissions.md. A route added to systemAPI or rolesAdminAPI
+// AGENTS/work/auth-and-identity/global-roles-and-permissions.md (upstream semaphoreui/semaphore). A route added to systemAPI or rolesAdminAPI
 // belongs here too.
 func globalRoutes() []globalRoute {
 	system := func(method, path, body string) globalRoute {

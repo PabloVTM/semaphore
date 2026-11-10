@@ -1,7 +1,7 @@
 version: "3"
 
 vars:
-  DOCKER_ORG: semaphoreui
+  DOCKER_ORG: ghcr.io/pablovtm
   DOCKER_SERVER: semaphore
   DOCKER_RUNNER: runner
   DOCKER_CMD: docker
@@ -34,14 +34,10 @@ tasks:
     desc: Installs required tools to build and publish
     vars:
       SWAGGER_VERSION: v0.30.5
-      GORELEASER_VERSION: v2.11.2
       GOLINTER_VERSION: v2.13.2
-      CYCLONEDX_GOMOD_VERSION: v1.12.0
     cmds:
       - go install github.com/go-swagger/go-swagger/cmd/swagger@latest
-      - go install github.com/goreleaser/goreleaser/v2@{{ .GORELEASER_VERSION }}
       - go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@{{ .GOLINTER_VERSION }}
-      - go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@{{ .CYCLONEDX_GOMOD_VERSION }}
     dir: /tmp
 
   deps:be:
@@ -200,16 +196,6 @@ tasks:
     desc: Run end to end test for API with dredd
     cmds:
       - ./web/node_modules/.bin/dredd --config .dredd/dredd.local.yml
-
-  release:prod:
-    desc: Create and publish a release
-    cmds:
-      - goreleaser
-
-  release:test:
-    desc: Create a local test release
-    cmds:
-      - goreleaser --auto-snapshot --clean --skip=sign
 
   docker:test:
     desc: Test containers by building, running, testing and deleting them

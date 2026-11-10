@@ -190,7 +190,7 @@ type WorkflowEdge struct {
 
 	// InputMode and InputMappings say how the outputs of the source node feed
 	// the survey variables of the destination task node; see
-	// AGENTS/work/workflow-editor/artifacts.md § Consumer. Only an edge into a
+	// AGENTS/work/workflow-editor/artifacts.md § Consumer (upstream semaphoreui/semaphore). Only an edge into a
 	// task node may carry them.
 	InputMode WorkflowEdgeInputMode `db:"input_mode" json:"input_mode,omitempty" backup:"input_mode"`
 

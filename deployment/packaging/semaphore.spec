@@ -73,7 +73,7 @@ install -m 755 semaphoreui.service %{buildroot}%{_unitdir}/semaphoreui.service
 
 %files
 %license LICENSE
-%doc README.md CONTRIBUTING.md
+%doc README.md
 %attr(755, root, root) %{_bindir}/semaphore
 %attr(755, root, root) %{_bindir}/semaphore-setup
 %attr(644, root,root) %{_sysconfdir}/semaphore/

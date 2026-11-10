@@ -1,7 +1,7 @@
 # Docker
 
 Generally we are building production-grade images for each tag, latest and even
-for the development branch which will be pushed to [DockerHub][dockerhub]. If
+for the development branch which will be pushed to the [GitHub Container Registry][dockerhub]. If
 you still need to build your own image you can easily do that, you just need
 install [Docker][docker] and [Task][gotask] on your system.
 
@@ -48,7 +48,7 @@ variables for `INSTALL_PATH` (`/usr/local/bin`) and `REQUIRE_SUDO` (true).
 task docker:test
 ```
 
-[dockerhub]: https://hub.docker.com/r/semaphoreui/semaphore
+[dockerhub]: https://github.com/PabloVTM/semaphore/pkgs/container/semaphore
 [docker]: https://docs.docker.com/engine/install/
 [podman]: https://podman.io/docs/installation
 [gotask]: https://taskfile.dev/installation/

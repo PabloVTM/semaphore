@@ -71,7 +71,7 @@ services:
     env_file:
       - .env
   semaphore:
-    image: semaphoreui/semaphore:latest
+    image: ghcr.io/pablovtm/semaphore:latest
     environment:
       SEMAPHORE_DB_DIALECT: "sqlite"
       SEMAPHORE_ADMIN_PASSWORD: "changeme"
