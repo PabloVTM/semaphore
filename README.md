@@ -10,7 +10,7 @@ The server image is published to GitHub Container Registry for `linux/amd64` and
 
 | Tag | Content |
 | --- | --- |
-| `ghcr.io/pablovtm/semaphore:latest` | Latest build of `develop`. |
+| `ghcr.io/pablovtm/semaphore:latest` | Latest build of `master`. |
 | `ghcr.io/pablovtm/semaphore:YYYY-MM-DD` | Dated version, e.g. `2026-11-10`. Each build upgrades the Alpine packages, so a new dated version also brings the latest Alpine security fixes. |
 
 It bundles Ansible 13.8, OpenTofu 1.13, Terraform 1.17 and Terragrunt 0.78 (Terragrunt 1.x no longer forwards the `workspace` commands Semaphore runs).
@@ -71,7 +71,7 @@ git tag 2026-11-10
 git push origin 2026-11-10
 ```
 
-The [build-test-publish](.github/workflows/build-test-publish.yml) workflow lints and tests the web app and the Go code, builds the image from the latest Alpine base with no cache, smoke tests it (SQLite, admin sign-in, the theme in the bundle, the bundled tools, no pending Alpine updates), then pushes the multi-arch image. Pushes to `develop` publish `latest`.
+The [build-test-publish](.github/workflows/build-test-publish.yml) workflow lints and tests the web app and the Go code, builds the image from the latest Alpine base with no cache, smoke tests it (SQLite, admin sign-in, the theme in the bundle, the bundled tools, no pending Alpine updates), then pushes the multi-arch image. Pushes to `master` publish `latest`.
 
 ## Building
 

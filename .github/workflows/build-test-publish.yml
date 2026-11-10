@@ -2,12 +2,12 @@ name: build-test-publish
 
 # Lints and tests the code, builds the server image and smoke tests it (SQLite,
 # admin login, bundled tools), then publishes a multi-arch image to GHCR. A push
-# to develop publishes `latest`; pushing a date tag (e.g. 2026-11-10) publishes
+# to master publishes `latest`; pushing a date tag (e.g. 2026-11-10) publishes
 # that version.
 
 on:
   push:
-    branches: [develop]
+    branches: [master]
     tags: ['[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]']
   pull_request:
   workflow_dispatch:
