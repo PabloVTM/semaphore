@@ -32,9 +32,11 @@ RUN --mount=type=cache,target=/go/pkg \
 
 
 # renovate: datasource=github-releases depName=opentofu/opentofu
-ENV OPENTOFU_VERSION=1.11.0
+ENV OPENTOFU_VERSION=1.13.9
 # renovate: datasource=github-releases depName=hashicorp/terraform
-ENV TERRAFORM_VERSION=1.11.3
+ENV TERRAFORM_VERSION=1.17.1
+# Terragrunt 1.x no longer forwards commands such as `workspace` that Semaphore runs,
+# so it stays on the 0.x CLI.
 # renovate: datasource=github-releases depName=gruntwork-io/terragrunt
 ENV TERRAGRUNT_VERSION=0.78.0
 #ENV PULUMI_VERSION="3.116.1"
@@ -53,6 +55,9 @@ RUN wget -O /tmp/terragrunt https://github.com/gruntwork-io/terragrunt/releases/
 FROM alpine:3.24
 
 ARG TARGETARCH="amd64"
+
+# Pull in Alpine security fixes released after the base image
+RUN apk upgrade --no-cache
 
 RUN apk add --no-cache -U \
     bash curl git gnupg mysql-client openssh-client-default python3 python3-dev py3-pip rsync sshpass tar tini tzdata unzip wget zip && \
@@ -83,7 +88,7 @@ RUN chown -R semaphore:0 /usr/local/bin/runner-wrapper && \
 WORKDIR /home/semaphore
 
 # renovate: datasource=pypi depName=ansible
-ARG ANSIBLE_VERSION=13.5.0
+ARG ANSIBLE_VERSION=13.8.0
 ENV ANSIBLE_VERSION=${ANSIBLE_VERSION}
 ARG ANSIBLE_VENV_PATH=/opt/semaphore/apps/ansible/${ANSIBLE_VERSION}/venv
 
